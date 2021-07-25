@@ -3,7 +3,6 @@ const express=require('express');
 const serveStatic=require('serve-static');
 var app=express();
 
-var hostname="localhost";
 var port=3001;
 
 
@@ -31,7 +30,7 @@ app.get("/", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
 });
 
-app.listen(port,hostname,function(){
+app.listen(port, function(){
 
-  console.log(`Server hosted at http://${hostname}:${port}`);
+  console.log(`Server hosted at http://'your-aws-ip':${port}`);
 });
