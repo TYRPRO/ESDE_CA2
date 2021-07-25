@@ -6,7 +6,7 @@ if ($updateDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'https://localhost:5000';
+        const baseUrl = 'http://localhost:5000';
         //Collect fileId value from the input element, fileIdInput (hidden input element)
         let fileId = $('#fileIdInput').val();
         //Obtain user id from local storage
@@ -15,7 +15,7 @@ if ($updateDesignFormContainer.length != 0) {
         let designTitle = $('#designTitleInput').val();
         let designDescription = $('#designDescriptionInput').val();
         //Create a FormData object to build key-value pairs of information before
-        //making a PUT https request.
+        //making a PUT http request.
         let webFormData = new FormData();
         tmpToken = localStorage.getItem("token");
         webFormData.append('designTitle', designTitle);
@@ -55,7 +55,7 @@ if ($updateDesignFormContainer.length != 0) {
     });
 
     function getOneData() {
-        const baseUrl = 'https://localhost:5000';
+        const baseUrl = 'http://localhost:5000';
         //Get the fileId information from the web browser URL textbox
         let query = window.location.search.substring(1);
         let arrayData = query.split("=");
@@ -96,6 +96,6 @@ if ($updateDesignFormContainer.length != 0) {
             });
 
     } //End of getOneData
-    //Call getOneData function to do a GET https request on an API to retrieve one user record
+    //Call getOneData function to do a GET http request on an API to retrieve one user record
     getOneData(); //Call getOneData to begin populating the form input controls with the existing record information.
 } //End of checking for $updateDesignFormContainer jQuery object
