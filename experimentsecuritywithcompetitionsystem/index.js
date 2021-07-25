@@ -76,15 +76,11 @@ router.use((err, req, res, next) => {
     }
 });
 
-const https = require('https');
-const fs = require('fs');
-const options = {
-  key: fs.readFileSync('C:/WINDOWS/system32/localhost-key.pem'),
-  cert: fs.readFileSync('C:/WINDOWS/system32/localhost.pem'),
-};
-https
-  .createServer(options, app).listen({port:5000});
 
+app.listen(PORT, err => {
+  if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
+  console.log(`Server is Listening on: http://localhost:${PORT}/`);
+});
 
 
 

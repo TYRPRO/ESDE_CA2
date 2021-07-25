@@ -6,7 +6,7 @@ if ($searchDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'https://localhost:5000';
+        const baseUrl = 'http://localhost:5000';
         let searchInput = $('#searchInput').val();
         let userId = localStorage.getItem('user_id');
         tmpToken = localStorage.getItem("token");
@@ -83,11 +83,11 @@ if ($searchDesignFormContainer.length != 0) {
     //I have hard code 3 buttons for the manage-submission interface (user role)
     //to cut down the JavaScript code for this file.
     //If the jQuery object which represents the form element exists,
-    //the following code will create a method to make a https GET
+    //the following code will create a method to make a http GET
     //to server-side api.
     function clickHandlerForPageButton(event) {
         event.preventDefault();
-        const baseUrl = 'https://localhost:5000';
+        const baseUrl = 'http://localhost:5000';
         let userId = localStorage.getItem('user_id');
         let pageNumber = $(event.target).text().trim();
         let searchInput = $('#searchInput').val();

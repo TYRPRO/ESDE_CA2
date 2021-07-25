@@ -1,5 +1,5 @@
 function checkUserRole() {
-  const baseUrl = "https://localhost:5000";
+  const baseUrl = "http://localhost:5000";
   tmpToken = localStorage.getItem("token");
   userId = localStorage.getItem("user_id");
   axios({
@@ -15,13 +15,13 @@ function checkUserRole() {
       console.log(response.data);
       if (response.data.role == "admin") {
         window.location.assign(
-          "https://localhost:3001/admin/manage_users.html"
+          "http://localhost:3001/admin/manage_users.html"
         );
       } else if (response.data.role != "user") {
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
         localStorage.removeItem("role_name");
-        window.location.assign("https://localhost:3001/login.html");
+        window.location.assign("http://localhost:3001/login.html");
       }
     })
     .catch(function (response) {
@@ -30,7 +30,7 @@ function checkUserRole() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_id");
       localStorage.removeItem("role_name");
-      window.location.assign("https://localhost:3001/login.html");
+      window.location.assign("http://localhost:3001/login.html");
     });
 }
 checkUserRole();

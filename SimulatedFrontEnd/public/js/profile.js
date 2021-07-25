@@ -9,7 +9,7 @@ if ($profileContainer.length != 0) {
   });
 
   function getOneUser() {
-    const baseUrl = "https://localhost:5000";
+    const baseUrl = "http://localhost:5000";
     let userId = localStorage.getItem("user_id");
     tmpToken = localStorage.getItem("token");
 
@@ -38,6 +38,6 @@ if ($profileContainer.length != 0) {
         }).show();
       });
   } //End of getOneUser
-  //Call getOneUser function to do a GET https request on an API to retrieve one user record
+  //Call getOneUser function to do a GET http request on an API to retrieve one user record
   getOneUser();
 } //End of checking for $profileContainer jQuery object

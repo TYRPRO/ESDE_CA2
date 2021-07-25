@@ -1,22 +1,10 @@
 
 const express=require('express');
 const serveStatic=require('serve-static');
-const hsts = require('hsts')
-const https = require('https');
 var app=express();
 
-app.enable('trust proxy');
-
-
-
-// SSL
-const fs = require('fs');
-const options = {
-  key: fs.readFileSync('C:/WINDOWS/system32/localhost-key.pem'),
-  cert: fs.readFileSync('C:/WINDOWS/system32/localhost.pem'),
-};
-
-
+var hostname="localhost";
+var port=3001;
 
 
 app.use(function(req,res,next){
@@ -35,32 +23,15 @@ app.use(function(req,res,next){
 });
 
 
-app.use(function(req, res, next) {
-  console.log('running check here')
-  if (!req.secure) {
-    console.log('redirecting supposed to happen...')
-     return res.redirect("https://" + req.headers.host + req.url);
-  }
-
-  next();
-})
-
-
-app.use(hsts({
-  maxAge: 31536000,        // Must be at least 1 year to be approved
-  includeSubDomains: true, // Must be enabled to be approved
-  preload: true
-}))
-
 
 app.use(serveStatic(__dirname+"/public"));
 
 
-
-https
-  .createServer(options, app).listen(3001,'localhost')
-
-
 app.get("/", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
+});
+
+app.listen(port,hostname,function(){
+
+  console.log(`Server hosted at http://${hostname}:${port}`);
 });

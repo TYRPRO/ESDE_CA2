@@ -1,5 +1,5 @@
 function checkAdminRole() {
-  const baseUrl = "https://localhost:5000";
+  const baseUrl = "http://localhost:5000";
   tmpToken = localStorage.getItem("token");
   userId = localStorage.getItem("user_id");
   axios({
@@ -15,13 +15,13 @@ function checkAdminRole() {
       console.log(response.data);
       if (response.data.role == "user") {
         window.location.assign(
-          "https://localhost:3001/user/manage_submission.html"
+          "http://localhost:3001/user/manage_submission.html"
         );
       } else if (response.data.role != "admin") {
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
         localStorage.removeItem("role_name");
-        window.location.assign("https://localhost:3001/login.html");
+        window.location.assign("http://localhost:3001/login.html");
       }
     })
     .catch(function (response) {
@@ -30,7 +30,7 @@ function checkAdminRole() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_id");
       localStorage.removeItem("role_name");
-      window.location.assign("https://localhost:3001/login.html");
+      window.location.assign("http://localhost:3001/login.html");
     });
 }
 checkAdminRole();
