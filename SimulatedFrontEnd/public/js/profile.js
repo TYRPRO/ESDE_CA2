@@ -1,4 +1,8 @@
 let $profileContainer = $("#profileContainer");
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($profileContainer.length != 0) {
   console.log(
     "Profile page is detected. Binding event handling logic to form elements."
@@ -9,7 +13,6 @@ if ($profileContainer.length != 0) {
   });
 
   function getOneUser() {
-    const baseUrl = "http://localhost:5000";
     let userId = localStorage.getItem("user_id");
     tmpToken = localStorage.getItem("token");
 

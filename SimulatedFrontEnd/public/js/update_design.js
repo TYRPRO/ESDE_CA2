@@ -1,4 +1,8 @@
 let $updateDesignFormContainer = $('#updateDesignFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($updateDesignFormContainer.length != 0) {
     console.log('Update Design form is detected. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,7 +10,6 @@ if ($updateDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         //Collect fileId value from the input element, fileIdInput (hidden input element)
         let fileId = $('#fileIdInput').val();
         //Obtain user id from local storage
@@ -55,7 +58,6 @@ if ($updateDesignFormContainer.length != 0) {
     });
 
     function getOneData() {
-        const baseUrl = 'http://localhost:5000';
         //Get the fileId information from the web browser URL textbox
         let query = window.location.search.substring(1);
         let arrayData = query.split("=");

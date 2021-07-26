@@ -1,4 +1,8 @@
 let $loginFormContainer = $('#loginFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($loginFormContainer.length != 0) {
     console.log('Login form detected. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,12 +10,12 @@ if ($loginFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let email = $('#emailInput').val();
         let password = $('#passwordInput').val();
         let webFormData = new FormData();
         webFormData.append('email', email);
         webFormData.append('password', password);
+        console.log("baseURL: " + baseUrl);
         axios({
                 method: 'post',
                 url: baseUrl + '/api/user/login',

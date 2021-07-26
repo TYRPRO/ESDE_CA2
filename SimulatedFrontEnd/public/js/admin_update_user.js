@@ -1,4 +1,8 @@
 let $updateUserFormContainer = $('#updateUserFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($updateUserFormContainer.length != 0) {
     console.log('Update User form is detected. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,7 +10,6 @@ if ($updateUserFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         //Collect role id value from the input element, roleIdInput
         let roleId = $('#roleIdInput').val();
         //Obtain user id from local storage
@@ -52,7 +55,6 @@ if ($updateUserFormContainer.length != 0) {
 
     function getOneUser() {
 
-        const baseUrl = 'http://localhost:5000';
         var query = window.location.search.substring(1);
         let arrayData = query.split("=");
         let recordIdToSearchUserRecord = arrayData[1];

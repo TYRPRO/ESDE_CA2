@@ -1,4 +1,8 @@
 let $submitDesignFormContainer = $('#submitDesignFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($submitDesignFormContainer.length != 0) {
     console.log('Submit design form detected. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,7 +10,6 @@ if ($submitDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let userId = localStorage.getItem('user_id');
         let tmpToken = localStorage.getItem("token");
         let designTitle = $('#designTitleInput').val();

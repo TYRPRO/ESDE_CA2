@@ -1,4 +1,8 @@
 let $searchDesignFormContainer = $('#searchDesignFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($searchDesignFormContainer.length != 0) {
     console.log('Search design form detected in user manage submission interface. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
