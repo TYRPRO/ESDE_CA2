@@ -10,7 +10,6 @@ if ($searchDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let searchInput = $('#searchInput').val();
         let userId = localStorage.getItem('user_id');
         tmpToken = localStorage.getItem("token");
@@ -91,7 +90,6 @@ if ($searchDesignFormContainer.length != 0) {
     //to server-side api.
     function clickHandlerForPageButton(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let userId = localStorage.getItem('user_id');
         let pageNumber = $(event.target).text().trim();
         let searchInput = $('#searchInput').val();
