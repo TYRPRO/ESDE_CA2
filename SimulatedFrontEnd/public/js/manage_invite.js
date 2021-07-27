@@ -1,4 +1,8 @@
 let $manageInviteFormContainer = $('#manageInviteFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($manageInviteFormContainer.length != 0) {
     console.log('Manage invite form detected. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,7 +10,6 @@ if ($manageInviteFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let fullName = $('#fullNameInput').val();
         let email = $('#emailInput').val();
         let userId = localStorage.getItem('user_id');

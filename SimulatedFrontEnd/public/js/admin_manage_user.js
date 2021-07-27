@@ -1,4 +1,8 @@
 let $searchDesignFormContainer = $('#searchUserFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($searchDesignFormContainer.length != 0) {
     console.log('Search user form detected in manage user interface. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
@@ -6,7 +10,6 @@ if ($searchDesignFormContainer.length != 0) {
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let searchInput = $('#searchInput').val();
         let userId = localStorage.getItem('user_id');
         tmpToken = localStorage.getItem("token");
@@ -87,7 +90,6 @@ if ($searchDesignFormContainer.length != 0) {
 
     function clickHandlerForPageButton(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let userId = localStorage.getItem('user_id');
         let pageNumber = $(event.target).text().trim();
         let searchInput = $('#searchInput').val();

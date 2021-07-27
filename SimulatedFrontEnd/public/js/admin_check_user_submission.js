@@ -1,15 +1,21 @@
 let $searchUserFormContainer = $('#searchUserFormContainer');
+
+your_aws_ip = "localhost";
+const baseUrl = 'http://' + your_aws_ip +':5000';
+
 if ($searchUserFormContainer.length != 0) {
+    var test = "";
     console.log('Search user form detected in user manage submission interface. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
     //the following code will create a method to send key-value pair information to do record searching
     //to server-side api when the #submitButton element fires the click event.
-    $('#submitButton').on('click', function(event) {
+    $('#submitButton').on('click', function (event) {
+       
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let searchInput = $('#searchInput').val();
         let userId = localStorage.getItem('user_id');
         tmpToken = localStorage.getItem("token");
+        console.log("baseURL: " + baseUrl);
         axios({
                 headers: {
                     'user': userId,
@@ -84,7 +90,6 @@ if ($searchUserFormContainer.length != 0) {
     //to server-side api.
     function clickHandlerForPageButton(event) {
         event.preventDefault();
-        const baseUrl = 'http://localhost:5000';
         let userId = localStorage.getItem('user_id');
         let pageNumber = $(event.target).text().trim();
         let searchInput = $('#searchInput').val();
