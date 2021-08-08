@@ -1,32 +1,36 @@
-let $searchDesignFormContainer = $('#searchDesignFormContainer');
+let $searchDesignFormContainer = $('#searchUserFormContainer');
 
 your_aws_ip = "50.16.186.159";
 const baseUrl = 'http://' + your_aws_ip +':5000';
 
 if ($searchDesignFormContainer.length != 0) {
-    console.log('Search design form detected in user manage submission interface. Binding event handling logic to form elements.');
+    console.log('Search user form detected in manage user interface. Binding event handling logic to form elements.');
     //If the jQuery object which represents the form element exists,
-    //the following code will create a method to send key-value pair information to do record searching
+    //the following code will create a method to submit search parameters
     //to server-side api when the #submitButton element fires the click event.
     $('#submitButton').on('click', function(event) {
         event.preventDefault();
         let searchInput = $('#searchInput').val();
         let userId = localStorage.getItem('user_id');
+	var userData = {"user":userId};
+	userData = JSON.stringify(userData);
         tmpToken = localStorage.getItem("token");
         axios({
                 headers: {
-                    'user': userId,
-                    authorization: "Bearer " + tmpToken 
+                    //Modify this will affect the checkUserFn.js middleware file at the backend.
+                    authorization: "Bearer " + tmpToken
                 },
-                method: 'get',
-                url: baseUrl + '/api/user/process-search-design/1/' + searchInput,
+                method: 'post',
+                url:'https://qqt32wwz8a.execute-api.us-east-1.amazonaws.com/test/1' + searchInput,
+		data: userData,
             })
             .then(function(response) {
                 //Using the following to inspect the response.data data structure
                 //before deciding the code which dynamically generates cards.
                 //Each card describes a design record.
                 //console.dir(response.data);
-                const records = response.data.filedata;
+		console.log(response);
+                const records = response.data.userdata;
                 const totalNumOfRecords = response.data.total_number_of_records;
                 //Find the main container which displays page number buttons
                 let $pageButtonContainer = $('#pagingButtonBlock');
@@ -47,15 +51,18 @@ if ($searchDesignFormContainer.length != 0) {
                     let record = records[index];
                     console.log(record.cloudinary_url);
                     let $card = $('<div></div>').addClass('card').attr('style', 'width: 18rem;');
-                    $card.append($('<img></img>').addClass('card-img-top').addClass('app_thumbnail').attr('src', record.cloudinary_url));
                     let $cardBody = $('<div></div>').addClass('card-body');
-                    let $editDesignButtonBlock = $('<div></div>').addClass('col-md-2 float-right');
-                    $editDesignButtonBlock.append($('<a>Update</a>').addClass('btn btn-primary').attr('href', 'update_design.html?id=' + record.file_id));
-                    $cardBody.append($editDesignButtonBlock);
-                    $cardBody.append($('<h5></h5>').addClass('card-title').text(record.design_title));
-                    $cardBody.append($('<p></p>').addClass('card-text').text(record.design_description));
+                    $cardBody.append($('<h5></h5>').addClass('card-title').text(record.fullname));
+                    $editUserButtonBlock = $('<div></div>').addClass('col-md-2 float-right');
+                    $editUserButtonBlock.append($('<a>Manage</a>').addClass('btn btn-primary').attr('href', 'update_user.html?id=' + record.user_id));
+                    $cardBody.append($editUserButtonBlock);
+
+                    $cardBody.append($('<p></p>').addClass('card-text').text(record.email));
+                    if (record.role_name == 'admin') {
+                        $cardBody.append($('<img></img>').attr({ 'src': '../images/admin.png', 'widthc': '50' }).addClass('text-right'));
+                    }
                     $card.append($cardBody);
-                    //After preparing all the necessary HTML elements to describe the file data,
+                    //After preparing all the necessary HTML elements to describe the user data,
                     //I used the code below to insert the main parent element into the div element, dataBlock.
                     $dataBlockContainer.append($card);
                     $dataBlockContainer.append($('<h5></h5>'));
@@ -73,6 +80,10 @@ if ($searchDesignFormContainer.length != 0) {
 
             }).catch(function(response) {
                 //Handle error
+		    console.log(response);
+		    console.log(response.response);
+		    console.log(response.response.data);
+		console.log(response.response.data.message);
                 console.dir(response);
                 new Noty({
                     type: 'error',
@@ -83,32 +94,28 @@ if ($searchDesignFormContainer.length != 0) {
                 }).show();
             });
     });
-    //I have hard code 3 buttons for the manage-submission interface (user role)
-    //to cut down the JavaScript code for this file.
-    //If the jQuery object which represents the form element exists,
-    //the following code will create a method to make a http GET
-    //to server-side api.
+
     function clickHandlerForPageButton(event) {
         event.preventDefault();
         let userId = localStorage.getItem('user_id');
         let pageNumber = $(event.target).text().trim();
         let searchInput = $('#searchInput').val();
         tmpToken = localStorage.getItem("token");
-        console.log(pageNumber);
+        console.log('Checking the button page number which raised the click event : ', pageNumber);
         axios({
                 headers: {
                     'user': userId,
-                    authorization: "Bearer " + tmpToken 
+                    authorization: "Bearer " + tmpToken
                 },
                 method: 'get',
-                url: baseUrl + '/api/user/process-search-design/' + pageNumber + '/' + searchInput,
+                url: baseUrl + '/api/user/process-search-user/' + pageNumber + '/' + searchInput,
             })
             .then(function(response) {
                 //Using the following to inspect the response.data data structure
                 //before deciding the code which dynamically generates cards.
                 //Each card describes a design record.
                 //console.dir(response.data);
-                const records = response.data.filedata;
+                const records = response.data.userdata;
                 const totalNumOfRecords = response.data.total_number_of_records;
                 //Find the main container which displays page number buttons
                 let $pageButtonContainer = $('#pagingButtonBlock');
@@ -120,13 +127,15 @@ if ($searchDesignFormContainer.length != 0) {
                     let record = records[index];
                     console.log(record.cloudinary_url);
                     let $card = $('<div></div>').addClass('card').attr('style', 'width: 18rem;');
-                    $card.append($('<img></img>').addClass('card-img-top').addClass('app_thumbnail').attr('src', record.cloudinary_url));
                     let $cardBody = $('<div></div>').addClass('card-body');
-                    let $editDesignButtonBlock = $('<div></div>').addClass('col-md-2 float-right');
-                    $editDesignButtonBlock.append($('<a>Update</a>').addClass('btn btn-primary').attr('href', 'update_design.html?id=' + record.file_id));
-                    $cardBody.append($editDesignButtonBlock);
-                    $cardBody.append($('<h5></h5>').addClass('card-title').text(record.design_title));
-                    $cardBody.append($('<p></p>').addClass('card-text').text(record.design_description));
+                    $cardBody.append($('<h5></h5>').addClass('card-title').text(record.fullname));
+                    $editUserButtonBlock = $('<div></div>').addClass('col-md-2 float-right');
+                    $editUserButtonBlock.append($('<a>Manage</a>').addClass('btn btn-primary').attr('href', 'update_user.html?id=' + record.user_id));
+                    $cardBody.append($editUserButtonBlock);
+                    $cardBody.append($('<p></p>').addClass('card-text').text(record.email));
+                    if (record.role_name == 'admin') {
+                        $cardBody.append($('<img></img>').attr({ 'src': '../images/admin.png', 'widthc': '50' }).addClass('text-right'));
+                    }
                     $card.append($cardBody);
                     //After preparing all the necessary HTML elements to describe the file data,
                     //I used the code below to insert the main parent element into the div element, dataBlock.
@@ -147,9 +156,9 @@ if ($searchDesignFormContainer.length != 0) {
                     type: 'error',
                     layout: 'topCenter',
                     theme: 'sunset',
-                    text: response.response.data.message,
+                    text: 'Unable to search',
                 }).show();
             });
 
     } //End of clickHandlerForPageButton
-} //End of checking for $searchDesignFormContainer jQuery object
+} //End of checking for $searchUserFormContainer jQuery object

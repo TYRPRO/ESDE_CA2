@@ -2,7 +2,7 @@
 function checkAdminRole() {
 
   
-your_aws_ip = "localhost";
+your_aws_ip = "50.16.186.159";
 const baseUrl = 'http://' + your_aws_ip +':5000';
 
 const frontEndUrl = 'http://' + your_aws_ip +':3001';

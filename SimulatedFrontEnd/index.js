@@ -32,5 +32,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, function(){
 
-  console.log(`Server hosted at http://'your-aws-ip':${port}`);
+  console.log(`Server hosted at http://50.16.186.159:${port}`);
 });

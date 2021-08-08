@@ -1,6 +1,6 @@
 let $searchDesignFormContainer = $('#searchUserFormContainer');
 
-your_aws_ip = "localhost";
+your_aws_ip = "50.16.186.159";
 const baseUrl = 'http://' + your_aws_ip +':5000';
 
 if ($searchDesignFormContainer.length != 0) {
@@ -16,17 +16,18 @@ if ($searchDesignFormContainer.length != 0) {
         axios({
                 headers: {
                     //Modify this will affect the checkUserFn.js middleware file at the backend.
-                    'user': userId,
-                    authorization: "Bearer " + tmpToken
+                    authorization: "Bearer " + tmpToken,
+			user:userId
                 },
                 method: 'get',
-                url: baseUrl + '/api/user/process-search-user/1/' + searchInput,
+                url:baseUrl+'/api/user/process-search-user/1/' + searchInput,
             })
             .then(function(response) {
                 //Using the following to inspect the response.data data structure
                 //before deciding the code which dynamically generates cards.
                 //Each card describes a design record.
                 //console.dir(response.data);
+		console.log(response);
                 const records = response.data.userdata;
                 const totalNumOfRecords = response.data.total_number_of_records;
                 //Find the main container which displays page number buttons
@@ -77,6 +78,10 @@ if ($searchDesignFormContainer.length != 0) {
 
             }).catch(function(response) {
                 //Handle error
+		    console.log(response);
+		    console.log(response.response);
+		    console.log(response.response.data);
+		console.log(response.response.data.message);
                 console.dir(response);
                 new Noty({
                     type: 'error',

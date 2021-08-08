@@ -1,6 +1,6 @@
 let $profileContainer = $("#profileContainer");
 
-your_aws_ip = "localhost";
+your_aws_ip = "50.16.186.159";
 const baseUrl = 'http://' + your_aws_ip +':5000';
 
 if ($profileContainer.length != 0) {
@@ -17,20 +17,23 @@ if ($profileContainer.length != 0) {
     tmpToken = localStorage.getItem("token");
 
     axios({
-      headers: { user: userId, authorization: "Bearer " + tmpToken },
-      method: "get",
-      url: baseUrl + "/api/user/" + userId,
+      headers: {authorization: "Bearer " + tmpToken },
+      method: "post",
+	data: JSON.stringify({user:userId}),
+      url: 'https://qqt32wwz8a.execute-api.us-east-1.amazonaws.com/test',
     })
       .then(function (response) {
         //Using the following to inspect the response.data data structure
         //before deciding the code which dynamically populate the elements with data.
-        console.dir(response.data);
+        console.log(response.data);
+	      console.dir(response.data);
         const record = response.data.userdata;
         $("#fullNameOutput").text(record.fullname);
         $("#emailOutput").text(record.email);
       })
       .catch(function (response) {
         //Handle error
+	 console.log(response);
         console.dir(response);
         new Noty({
           type: "error",

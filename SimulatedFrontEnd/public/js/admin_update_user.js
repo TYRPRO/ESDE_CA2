@@ -1,6 +1,6 @@
 let $updateUserFormContainer = $('#updateUserFormContainer');
 
-your_aws_ip = "localhost";
+your_aws_ip = "50.16.186.159";
 const baseUrl = 'http://' + your_aws_ip +':5000';
 
 if ($updateUserFormContainer.length != 0) {
